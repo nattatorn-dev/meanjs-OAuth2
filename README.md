@@ -1,5 +1,4 @@
-[![MEAN.JS Logo](http://meanjs.org/img/logo-small.png)](http://meanjs.org/) + ![MEAN.JS Logo](http://oauth.net/images/oauth-2-sm.png)
-
+[![MEAN.JS Logo](http://meanjs.org/img/logo-small.png)](http://meanjs.org/)
 [![Build Status](https://travis-ci.org/meanjs/mean.svg?branch=master)](https://travis-ci.org/meanjs/mean)
 
 # meanjs-OAuth2
@@ -19,3 +18,6 @@ npm start
 ```
 
 Go to http://localhost:8080/
+
+### TODO
+-mobile auth
