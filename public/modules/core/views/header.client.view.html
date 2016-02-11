@@ -1,0 +1,479 @@
+<div class="row border-bottom" data-ng-controller="HeaderController">
+  <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0;    z-index: 1001;
+    position: static;">
+    <div class="navbar-header">
+      <span minimaliza-sidebar></span>
+      <form role="search" class="navbar-form-custom" method="post" action="">
+        <div class="form-group">
+          <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+        </div>
+      </form>
+    </div>
+    <ul class="nav navbar-top-links navbar-right" data-ng-hide="authentication.user">
+      <li ui-route="/signup">
+        <button class="btn btn-info btn-sm" type="button" data-toggle="modal" data-target="#signupModal">Sign Up</button>
+      </li>
+      <li class="divider-vertical"></li>
+      <li ui-route="/signin">
+        <a data-toggle="modal" href="#loginModal">Log in</a>
+      </li>
+    </ul>
+    <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 500px;">
+        <div class="modal-content" style=" width: 100%;">
+
+          <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="    font-size: 40px;">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <form id="secureSigninForm" role="form" name="signupForm" data-ng-submit="signup()" novalidate autocomplete="off" class="form-horizontal">
+              <div class="form-group">
+              </div>
+              <div class="text-center">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <h1 class="m-t-none m-b">Join Osync</h3>
+                  <p>Sign in today for more expirience.</p>
+                </div>
+              </div>
+
+              <div class="text-center" style="margin-left: 110px; margin-right: 110px; margin-bottom: 4px;">
+                <a href="/auth/facebook" class="btn btn-block btn-social btn-facebook"  style="text-align: center">
+                  <span class="fa fa-facebook"></span> Sign up with Facebook
+                </a>
+              </div>
+              <div class="text-center" style="margin-left: 110px; margin-right: 110px; margin-bottom: 30px;">
+                <a href="/auth/google" class="btn btn-block btn-social btn-google" style="text-align: center">
+                  <span class="fa fa-google-plus"></span> Sign up with Google
+                </a>
+              </div>
+              <div class="text-center" style="margin-left: 80px; margin-right: 80px;">
+                <div class="text-strikethru" style="
+                ">
+                                  <div class="line" style="
+                    height: 1px;
+                    background-color: #D9D9DE;
+                    width: 90%;
+                    margin-left: 5%;
+                "></div>
+                                  <div class="text" style="
+                    display: inline-block;
+                    background-color: #ffffff;
+                    padding: 5px 10px;
+                    font-size: 14px;
+                    top: -16px;
+                    position: relative;
+                    color: #828587;
+                ">or</div>
+                                  </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Last Name">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <input type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="Email">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="Username">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <div class="progress password-meter" id="passwordMeter">
+                    <div class="progress-bar"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-2">
+                  <div id="captchaContainer"></div>
+                </div>
+              </div>
+              <div class="text-center form-group">
+                <button type="submit" name="signupSubmit" class="btn btn-large btn-primary">Sign me up!</button>
+              </div>
+              <div data-ng-show="error" class="text-center text-danger">
+                <strong data-ng-bind="error"></strong>
+              </div>
+              <p style="    text-align: center;"><span>By signing up, you agree to our terms of use, privacy policy, and cookie policy.</span></p>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="max-width: 500px;">
+          <div class="modal-content" style=" width: 100%; max-width: 500px;">
+
+            <div class="modal-body">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="    font-size: 40px;">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <form id="secureLoginForm" role="form" name="loginSubmit" data-ng-submit="signin()" novalidate autocomplete="off" class="form-horizontal">
+                <div class="form-group">
+                </div>
+                <div class="text-center">
+                  <div class="col-lg-8 col-lg-offset-2">
+                    <h1 class="m-t-none m-b">Welcome back!</h3>
+                  </div>
+                </div>
+
+                <div class="text-center" style="margin-left: 110px; margin-right: 110px; margin-bottom: 4px;">
+                  <a href="/auth/facebook" class="btn btn-block btn-social btn-facebook"  style="text-align: center">
+                    <span class="fa fa-facebook"></span> Log in with Facebook
+                  </a>
+                </div>
+                <div class="text-center" style="margin-left: 110px; margin-right: 110px; margin-bottom: 30px;">
+                  <a href="/auth/google" class="btn btn-block btn-social btn-google" style="text-align: center">
+                    <span class="fa fa-google-plus"></span> Log in with Google
+                  </a>
+                </div>
+                <div class="text-center" style="margin-left: 80px; margin-right: 80px;">
+                  <div class="text-strikethru" style="
+                  ">
+                                    <div class="line" style="
+                      height: 1px;
+                      background-color: #D9D9DE;
+                      width: 90%;
+                      margin-left: 5%;
+                  "></div>
+                                    <div class="text" style="
+                      display: inline-block;
+                      background-color: #ffffff;
+                      padding: 5px 10px;
+                      font-size: 14px;
+                      top: -16px;
+                      position: relative;
+                      color: #828587;
+                  ">or</div>
+                                    </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-lg-8 col-lg-offset-2">
+                    <input type="text" id="login_username" name="login_username" class="form-control" data-ng-model="credentials.username" placeholder="User Name">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-8 col-lg-offset-2">
+                    <input type="password" id="login_password" name="login_password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+                  </div>
+                </div>
+
+
+                <div class="text-center form-group">
+                    <button type="submit" name="loginSubmit" class="btn btn-primary">Log in</button>
+                </div>
+
+                <div data-ng-show="error" class="text-center text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+                <div class="text-center forgot-password">
+                    <a href="/#!/password/forgot">Forgot your password?</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <ul class="nav navbar-top-links navbar-right" data-ng-show="authentication.user">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <span data-ng-bind="authentication.user.displayName"></span> <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a href="/#!/settings/profile">Edit Profile</a>
+          </li>
+          <li>
+            <a href="/#!/settings/accounts">Manage Social Accounts</a>
+          </li>
+          <li data-ng-show="authentication.user.provider === 'local'">
+            <a href="/#!/settings/password">Change Password</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a href="/auth/signout">Signout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<script>
+  $(document).ready(function() {
+    FormValidation.Validator.securePassword = {
+      validate: function(validator, $field, options) {
+        var value = $field.val();
+        if (value === '') {
+          return true;
+        }
+        if (value.length < 8) {
+          return {
+            valid: false,
+            message: 'The password must be more than 8 characters long'
+          };
+        }
+        if (value.search(/[0-9]/) < 0) {
+          return {
+            valid: false,
+            message: 'The password must contain at least one digit'
+          }
+        }
+        return true;
+      }
+    };
+    $('#secureLoginForm').formValidation({
+      framework: 'bootstrap',
+      feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-exclamation-sign',
+        validating: 'glyphicon glyphicon-refresh'
+      },
+      fields: {
+      login_username: {
+        validators: {
+          notEmpty: {
+            message: 'The user name is required'
+          },
+          stringLength: {
+            min: 8,
+            max: 16,
+            message: 'The user name must be more than 8 characters long'
+          },
+          regexp: {
+            enabled: false,
+            regexp: /^[a-zA-Z\s]+$/,
+            message: 'The user name can only consist of alphabetical, number, and space'
+          }
+        }
+      },
+      login_password: {
+        validators: {
+          notEmpty: {
+            message: 'The password is required'
+          },
+          stringLength: {
+            min: 8,
+            message: 'The password must be more than 8 characters long'
+          },
+        }
+      }
+    }
+    }
+  )
+  .on('success.form.fv', function(e) {
+    e.preventDefault();
+    var $form = $(e.target);
+    var fv = $form.data('formValidation');
+    // fv.defaultSubmit();
+    $('#loginModal').modal('hide');
+  });
+
+    $('#secureSigninForm').formValidation({
+        framework: 'bootstrap',
+        feedbackIcons: {
+          valid: 'glyphicon glyphicon-ok',
+          invalid: 'glyphicon glyphicon-exclamation-sign',
+          validating: 'glyphicon glyphicon-refresh'
+        },
+        addOns: {
+          reCaptcha2: {
+            element: 'captchaContainer',
+            language: 'en',
+            theme: 'light',
+            siteKey: '6LdgOwETAAAAALA9auuNVKFeXizXcYFrKOVC_vs-',
+            timeout: 120,
+            message: 'The captcha is not valid'
+          }
+        },
+        fields: {
+          firstName: {
+            validators: {
+              notEmpty: {
+                message: 'The first name is required'
+              }
+            }
+          },
+          lastName: {
+            validators: {
+              notEmpty: {
+                message: 'The last name is required'
+              }
+            }
+          },
+          password: {
+            validators: {
+              notEmpty: {
+                message: 'The password is required and cannot be empty'
+              },
+              securePassword: {
+                message: 'The password is not valid'
+              },
+              callback: {
+                callback: function(value, validator, $field) {
+                  var score = 0;
+
+                  if (value === '') {
+                    return {
+                      valid: true,
+                      score: null
+                    };
+                  }
+                  score += ((value.length >= 8) ? 1 : -1);
+
+                  // The password contains uppercase character
+                  if (/[A-Z]/.test(value)) {
+                    score += 1;
+                  }
+
+                  // The password contains uppercase character
+                  if (/[a-z]/.test(value)) {
+                    score += 1;
+                  }
+
+                  // The password contains number
+                  if (/[0-9]/.test(value)) {
+                    score += 1;
+                  }
+
+                  // The password contains special characters
+                  if (/[~@#$%^&*()_+]/.test(value)) {
+                    score += 1;
+                  }
+
+                  return {
+                    valid: true,
+                    score: score // We will get the score later
+                  };
+                }
+              }
+            }
+          },
+          confirm_password: {
+            validators: {
+              notEmpty: {
+                message: 'The confirm password is required and cannot be empty'
+              },
+              identical: {
+                field: 'password',
+                message: 'The password and its confirm must be the same'
+              }
+            }
+          },
+          email: {
+            validators: {
+              notEmpty: {
+                message: 'The email is required'
+              },
+              emailAddress: {
+                message: 'The value is not a valid email address'
+              },
+              regexp: {
+                regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                message: 'The value is not a valid email address'
+              }
+            }
+          },
+          username: {
+            validators: {
+              notEmpty: {
+                message: 'The user name is required'
+              },
+              stringLength: {
+                min: 8,
+                max: 16,
+                message: 'The user name must be more than 8 and less than 16 characters long'
+              },
+              regexp: {
+                enabled: false,
+                regexp: /^[a-zA-Z\s]+$/,
+                message: 'The user name can only consist of alphabetical, number, and space'
+              }
+            }
+          }
+        }
+      })
+      .on('keyup', '[name="password"]', function() {
+        var isEmpty = $(this).val() == '';
+        $('#enableForm')
+          .formValidation('enableFieldValidators', 'password', !isEmpty)
+          .formValidation('enableFieldValidators', 'confirm_password', !isEmpty);
+
+        // Revalidate the field when user start typing in the password field
+        if ($(this).val().length == 1) {
+          $('#enableForm').formValidation('validateField', 'password')
+            .formValidation('validateField', 'confirm_password');
+        }
+      })
+      .on('err.validator.fv', function(e, data) {
+        if (data.field === 'email') {
+          data.element
+            .data('fv.messages')
+            .find('.help-block[data-fv-for="' + data.field + '"]').hide()
+            .filter('[data-fv-validator="' + data.validator + '"]').show();
+        }
+      })
+      .on('success.validator.fv', function(e, data) {
+        // The password passes the callback validator
+        if (data.field === 'password' && data.validator === 'callback') {
+          // Get the score
+          var score = data.result.score,
+            $bar = $('#passwordMeter').find('.progress-bar');
+
+          switch (true) {
+            case (score === null):
+              $bar.html('').css('width', '0%').removeClass().addClass('progress-bar');
+              break;
+
+            case (score <= 0):
+              $bar.html('Very weak').css('width', '25%').removeClass().addClass('progress-bar progress-bar-danger');
+              break;
+
+            case (score > 0 && score <= 2):
+              $bar.html('Weak').css('width', '50%').removeClass().addClass('progress-bar progress-bar-warning');
+              break;
+
+            case (score > 2 && score <= 4):
+              $bar.html('Medium').css('width', '75%').removeClass().addClass('progress-bar progress-bar-info');
+              break;
+
+            case (score > 4):
+              $bar.html('Strong').css('width', '100%').removeClass().addClass('progress-bar progress-bar-success');
+              break;
+
+            default:
+              break;
+          }
+        }
+      })
+      .on('success.form.fv', function(e) {
+        e.preventDefault();
+        var $form = $(e.target);
+        var fv = $form.data('formValidation');
+        // fv.defaultSubmit();
+        $('#signupModal').modal('hide');
+      });
+  });
+</script>

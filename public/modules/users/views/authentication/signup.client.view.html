@@ -1,0 +1,201 @@
+<div class="wrapper wrapper-content" data-ng-controller="AuthenticationController">
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <h3 class="m-t-none m-b">Sign in</h3>
+
+                    <p>Sign in today for more expirience.</p>
+
+                    <form id="securePasswordForm" role="form" name="userForm" data-ng-submit="signup()" class="signin" novalidate autocomplete="off">
+
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="credentials.lastName" placeholder="Last Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Your current email address</label>
+                            <input type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label>Choose your username</label>
+                            <input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label>Create a password</label>
+                            <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label>Prove you’re not a robot</label>
+                            <div id="captchaContainer"></div>
+                        </div>
+                        <div class="text-center form-group">
+                            <button type="submit" class="btn btn-large btn-primary">Sign up</button>
+                            &nbsp; or&nbsp;
+                            <a href="/#!/signin" class="show-signup">Sign in</a>
+                        </div>
+                        <div data-ng-show="error" class="text-center text-danger">
+                            <strong data-ng-bind="error"></strong>
+                        </div>
+                        <div class="text-center">
+                            <h4>Sign up using your social accounts</h4>
+                            <a href="/auth/facebook" class="btn btn-white">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            <a href="/auth/twitter" class="btn btn-white">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            <a href="/auth/google" class="btn btn-white">
+                                <i class="fa fa-google-plus"></i>
+                            </a>
+                            <a href="/auth/github" class="btn btn-white">
+                                <i class="fa fa-github"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+					FormValidation.Validator.securePassword = {
+				 validate: function(validator, $field, options) {
+						 var value = $field.val();
+						 if (value === '') {
+								 return true;
+						 }
+						 if (value.length < 8) {
+								 return {
+										 valid: false,
+										 message: 'The password must be more than 8 characters long'
+								 };
+						 }
+						 if (value === value.toLowerCase()) {
+								 return {
+										 valid: false,
+										 message: 'The password must contain at least one upper case character'
+								 }
+						 }
+						 if (value === value.toUpperCase()) {
+								 return {
+										 valid: false,
+										 message: 'The password must contain at least one lower case character'
+								 }
+						 }
+						 if (value.search(/[0-9]/) < 0) {
+								 return {
+										 valid: false,
+										 message: 'The password must contain at least one digit'
+								 }
+						 }
+						 return true;
+				 }
+		 };
+		  $('#securePasswordForm').formValidation({
+					framework: 'bootstrap',
+					feedbackIcons: {
+							valid: 'glyphicon glyphicon-ok',
+							invalid: 'glyphicon glyphicon-exclamation-sign',
+							validating: 'glyphicon glyphicon-refresh'
+					},
+          addOns: {
+          reCaptcha2: {
+              element: 'captchaContainer',
+              language: 'en',
+              theme: 'light',
+              siteKey: '6LcoOhQTAAAAAPZh-HmQNKDkkIQEn-CPqnGe3Ibc',
+              timeout: 120,
+              message: 'The captcha is not valid'
+           }
+          },
+					fields: {
+						firstName: {
+										validators: {
+												notEmpty: {
+														message: 'The first name is required'
+												}
+										}
+								},
+								lastName: {
+												validators: {
+														notEmpty: {
+																message: 'The last name is required'
+														}
+												}
+										},
+							password: {
+									validators: {
+											notEmpty: {
+													message: 'The password is required'
+											},
+											securePassword: {
+													message: 'The password is not valid'
+											}
+									}
+							},
+							email: {
+									validators: {
+											notEmpty: {
+													message: 'The email is required'
+											},
+											emailAddress: {
+													message: 'The value is not a valid email address'
+											},
+											regexp: {
+													regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+													message: 'The value is not a valid email address'
+											}
+									}
+						},
+						username: {
+										validators: {
+												notEmpty: {
+														message: 'The user name is required'
+												},
+												stringLength: {
+														min: 8,
+		                        max: 16,
+		                        message: 'The user name must be more than 8 and less than 16 characters long'
+												},
+		                    regexp: {
+		                        enabled: false,
+		                        regexp: /^[a-zA-Z\s]+$/,
+		                        message: 'The user name can only consist of alphabetical, number, and space'
+		                    }
+										}
+								}
+					}
+			})
+			.on('err.validator.fv', function(e, data) {
+            if (data.field === 'email') {
+                data.element
+                    .data('fv.messages')
+                    .find('.help-block[data-fv-for="' + data.field + '"]').hide()
+                    .filter('[data-fv-validator="' + data.validator + '"]').show();
+            }
+        })
+      .on('success.form.fv', function(e) {
+    // Prevent form submission
+        e.preventDefault();
+
+        // You can get the form instance
+        var $form = $(e.target);
+
+        // and the FormValidation instance
+        var fv = $form.data('formValidation');
+
+        // Do whatever you want here ...
+
+        // Use the defaultSubmit() method if you want to submit the form
+        // See http://formvalidation.io/api/#default-submit
+        // fv.defaultSubmit();
+      });
+		});
+</script>
