@@ -25,17 +25,37 @@ module.exports = function() {
 			providerData.accessToken = accessToken;
 			providerData.refreshToken = refreshToken;
 
+
+			// var _firstName = (profile.name.givenName) ? profile.name.givenName : '';
+			// var _lastName = (profile.name.familyName) ? profile.name.familyName : '';
+			// var _displayName = (profile.displayName) ? profile.displayName : '';
+			// var _email = (profile.emails[0].value) ? profile.emails[0].value : '';
+			// var _username = (profile.username) ? profile.username : '';
+			// var _providerData = (providerData) ? providerData : '';
+			var username = profile.displayName.split(' ');
 			// Create the user OAuth profile
 			var providerUserProfile = {
-				firstName: profile.name.givenName,
-				lastName: profile.name.familyName,
+				firstName: username[0],
+				lastName: username[1],
 				displayName: profile.displayName,
-				email: profile.emails[0].value,
-				username: profile.username,
+				email: '',
+				username: profile.id,
 				provider: 'facebook',
 				providerIdentifierField: 'id',
 				providerData: providerData
 			};
+
+			// Create the user OAuth profile
+			// var providerUserProfile = {
+			// 	firstName: profile.username,
+			// 	lastName: 'profile.name.familyName',
+			// 	displayName: 'profile.displayName',
+			// 	email: 'profile.emails[0].value',
+			// 	username: 'profile.username',
+			// 	provider: 'facebook',
+			// 	providerIdentifierField: 'id',
+			// 	providerData: 'providerData'
+			// };
 
 			// Save the user OAuth profile
 			users.saveOAuthUserProfile(req, providerUserProfile, done);

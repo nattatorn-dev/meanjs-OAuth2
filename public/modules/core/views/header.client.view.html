@@ -11,11 +11,11 @@
     </div>
     <ul class="nav navbar-top-links navbar-right" data-ng-hide="authentication.user">
       <li ui-route="/signup">
-        <button class="btn btn-info btn-sm" type="button" data-toggle="modal" data-target="#signupModal">Sign Up</button>
+        <button class="btn btn-info btn-sm" type="button" data-toggle="modal" data-target="#signupModal" ng-click="signupActive(this)">Sign Up</button>
       </li>
       <li class="divider-vertical"></li>
       <li ui-route="/signin">
-        <a data-toggle="modal" href="#loginModal">Log in</a>
+        <a data-toggle="modal" href="#loginModal" ng-click="LoginActive($event)">Log in</a>
       </li>
     </ul>
     <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -112,9 +112,9 @@
               <div class="text-center form-group">
                 <button type="submit" name="signupSubmit" class="btn btn-large btn-primary">Sign me up!</button>
               </div>
-              <div data-ng-show="error" class="text-center text-danger">
+              <!-- <div data-ng-show="error" class="text-center text-danger">
                 <strong data-ng-bind="error"></strong>
-              </div>
+              </div> -->
               <p style="    text-align: center;"><span>By signing up, you agree to our terms of use, privacy policy, and cookie policy.</span></p>
             </form>
             </div>
@@ -185,9 +185,9 @@
                     <button type="submit" name="loginSubmit" class="btn btn-primary">Log in</button>
                 </div>
 
-                <div data-ng-show="error" class="text-center text-danger">
+                <!-- <div data-ng-show="error" class="text-center text-danger">
                     <strong data-ng-bind="error"></strong>
-                </div>
+                </div> -->
                 <div class="text-center forgot-password">
                     <a href="/#!/password/forgot">Forgot your password?</a>
                 </div>
@@ -303,7 +303,7 @@
             element: 'captchaContainer',
             language: 'en',
             theme: 'light',
-            siteKey: '6LdgOwETAAAAALA9auuNVKFeXizXcYFrKOVC_vs-',
+            siteKey: '6LeiZRcTAAAAAN7hg7CwEHYFs6zYESz-JxtGRb94',
             timeout: 120,
             message: 'The captcha is not valid'
           }

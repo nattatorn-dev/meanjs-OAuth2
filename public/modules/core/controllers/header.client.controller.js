@@ -10,12 +10,25 @@ angular.module('core').controller('HeaderController', ['$scope', 'Authentication
 			$scope.isCollapsed = !$scope.isCollapsed;
 		};
 
+		$scope.initData = function() {
+				$scope.credentials = null;
+		}
 		// Collapsing the menu after navigation
 		$scope.$on('$stateChangeSuccess', function() {
-			$scope.isCollapsed = false;
+				$scope.isCollapsed = false;
 		});
 
 		if ($scope.authentication.user) $location.path('/');
+
+		$scope.signupActive = function() {
+				$('#secureSigninForm').data('formValidation').resetForm(true);
+				$scope.initData();
+		}
+
+		$scope.LoginActive = function(e) {
+				$('#secureLoginForm').data('formValidation').resetForm(true);
+				$scope.initData();
+		}
 
 		$scope.signup = function() {
 			$http.post('/auth/signup', $scope.credentials).success(function(response) {
